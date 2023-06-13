@@ -54,6 +54,7 @@ type Client interface {
 	CreateNotification(ctx context.Context, req *api.CreateNotificationRequest, opts ...grpc.CallOption) (*api.NotificationResponse, error)
 	GetNotification(ctx context.Context, req *api.GetNotificationRequest, opts ...grpc.CallOption) (*api.NotificationResponse, error)
 	GetNotifications(ctx context.Context, req *api.GetNotificationsRequest, opts ...grpc.CallOption) (*api.NotificationsResponse, error)
+	GetActorNotifications(ctx context.Context, req *api.GetNotificationsRequest, opts ...grpc.CallOption) (*api.NotificationsResponse, error)
 	DeleteNotification(ctx context.Context, req *api.DeleteNotificationRequest, opts ...grpc.CallOption) (*api.DeleteResponse, error)
 	Close() error
 }
@@ -156,6 +157,17 @@ func (nc *notificationsClient) GetNotifications(
 	defer cancel()
 
 	return nc.client.GetNotifications(ctx, req)
+}
+
+func (nc *notificationsClient) GetActorNotifications(
+	ctx context.Context,
+	req *api.GetNotificationsRequest,
+	opts ...grpc.CallOption,
+) (*api.NotificationsResponse, error) {
+	ctx, cancel := nc.contextWithOptions(ctx, nc.opts)
+	defer cancel()
+
+	return nc.client.GetActorNotifications(ctx, req)
 }
 
 func (nc *notificationsClient) DeleteNotification(
