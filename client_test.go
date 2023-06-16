@@ -74,6 +74,7 @@ func testNotificationCRUD(t *testing.T, nc notclient.Client) {
 		ActorId:       TEST_SHOP_ID,
 		SubjectId:     deliveryId,
 		TransactionId: offerId,
+		Content:       "from shop",
 		Type:          api.NotificationType_DELIVERY,
 	})
 	noti = getNotificationTester(t, nc, &api.GetNotificationRequest{
@@ -94,6 +95,7 @@ func createNotificationTester(t *testing.T, client notclient.Client, cor *api.Cr
 	assert.Equal(t, resp.Notification.Record.ActorId, cor.ActorId, "notification actor id should match input actor id")
 	assert.Equal(t, resp.Notification.Record.SubjectId, cor.SubjectId, "notification subject id should match input subject id")
 	assert.Equal(t, resp.Notification.Record.TransactionId, cor.TransactionId, "notification transaction id should match input transaction id")
+	assert.Equal(t, resp.Notification.Content, cor.Content, "notification Content should match input Content")
 	assert.Equal(t, resp.Notification.Type, cor.Type, "notification type should match input type")
 
 	return resp
